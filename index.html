@@ -151,6 +151,8 @@
             padding: 50px 40px;
             width: calc(100% - 280px);
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         html[dir="rtl"] .main-content {
@@ -225,11 +227,22 @@
             padding-right: 10px;
             text-align: left;
         }
-        
-        .price-variant {
-            display: block;
-            font-size: 0.9rem;
+
+        /* --- Footer Style --- */
+        .site-footer {
+            margin-top: auto; /* Pushes footer to bottom */
+            padding-top: 50px;
+            padding-bottom: 20px;
+            text-align: center;
+            border-top: 1px solid #222;
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        .site-footer a {
             color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
         }
 
         /* --- Mobile Responsive --- */
@@ -629,6 +642,13 @@
                 <div class="menu-item"><div class="item-info"><h3><span class="lang-en">HELL</span><span class="lang-ar">هيل</span></h3></div><div class="item-price">50</div></div>
             </div>
         </section>
+
+        <footer class="site-footer">
+            <p>
+                <span class="lang-en">All rights reserved to BEBO - Advertising - <a href="tel:01111152954">01111152954</a></span>
+                <span class="lang-ar">جميع الحقوق محفوظه لBEBO-للدعايه والاعلان-<a href="tel:01111152954">01111152954</a></span>
+            </p>
+        </footer>
 
     </main>
 
