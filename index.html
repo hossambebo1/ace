@@ -21,11 +21,10 @@
 
 <body class="bg-gray-50 text-black antialiased min-h-screen pb-24">
 
-    <!-- الهيدر الديناميكي المطور -->
+    <!-- الهيدر -->
     <header
         class="relative h-56 bg-zinc-950 text-white flex flex-col justify-end p-6 rounded-b-[2.5rem] shadow-md overflow-hidden text-center">
         <div class="absolute inset-0 bg-black/60 z-10"></div>
-        <!-- 🌟 وضعنا ID هنا ليتغير الرابط تلقائياً من الفايربيز -->
         <img id="headerBgImg" src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=600"
             class="absolute inset-0 w-full h-full object-cover" alt="Cafe Background">
 
@@ -45,7 +44,7 @@
 
     <main class="max-w-md mx-auto px-4 mt-6">
 
-        <!-- بنر العروض التلقائي المطور -->
+        <!-- بنر العروض التلقائي -->
         <div id="promoSlider" class="relative w-full h-40 bg-black rounded-2xl overflow-hidden shadow-sm mb-6 hidden">
             <div id="sliderWrapper" class="flex w-full h-full transition-transform duration-500 ease-in-out"></div>
             <div id="sliderDots" class="absolute bottom-2 right-4 z-20 flex gap-1.5"></div>
@@ -65,6 +64,7 @@
             </div>
         </div>
 
+        <!-- زر العودة للأقسام -->
         <button id="backBtn"
             class="hidden mb-4 bg-zinc-900 hover:bg-black text-white px-4 py-2.5 rounded-xl font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-xs">
             <i id="backIcon" class="fas fa-chevron-left text-xs"></i> <span id="backText">Back to Main Categories</span>
@@ -117,7 +117,7 @@
         const categoriesCollection = collection(db, "cafes", "ace", "categories");
         const itemsCollection = collection(db, "cafes", "ace", "items");
         const bannersCollection = collection(db, "cafes", "ace", "banners");
-        const cafeDocRef = doc(db, "cafes", "ace"); // المستند الرئيسي للكافيه
+        const cafeDocRef = doc(db, "cafes", "ace");
 
         let globalCategories = [];
         let globalItems = [];
@@ -149,13 +149,10 @@
             }
         };
 
-        // 🌟 مراقبة المستند الرئيسي لجلب صورة الهيدر واسم الكافيه ديناميكياً
         onSnapshot(cafeDocRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.data();
-                if (data.logoUrl) {
-                    document.getElementById('headerBgImg').src = data.logoUrl;
-                }
+                if (data.logoUrl) document.getElementById('headerBgImg').src = data.logoUrl;
                 const cafeName = currentLang === 'ar' ? (data.name_ar || data.name || "كافيه آيس") : (data.name_en || data.name || "ACE Cafe");
                 document.getElementById('mainTitle').innerText = cafeName;
             }
@@ -209,14 +206,10 @@
                     <div class="w-full h-full shrink-0 relative">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
                         <img src="${banner.url}" class="w-full h-full object-cover" alt="Promo">
-                        ${title ? `
-                        <div class="absolute bottom-4 left-4 right-4 z-20 text-white">
-                            <h3 class="text-base font-bold">${title}</h3>
-                        </div>` : ''}
+                        ${title ? `<div class="absolute bottom-4 left-4 right-4 z-20 text-white"><h3 class="text-base font-bold">${title}</h3></div>` : ''}
                     </div>
                 `;
                 sliderWrapper.innerHTML += slideHTML;
-
                 const dotHTML = `<span class="dot w-2 h-2 rounded-full bg-white transition-all" style="opacity: ${index === 0 ? '1' : '0.5'}; width: ${index === 0 ? '16px' : '8px'}"></span>`;
                 sliderDots.innerHTML += dotHTML;
             });
@@ -247,8 +240,9 @@
                 const lookupId = cat.id.toLowerCase().trim();
                 const iconClass = autoCategoryIcons[lookupId] || "fa-mug-hot";
 
+                // 🌟 تعديل أمان: استدعاء الدالة من خلال النطاق العام window علطول لمنع التعليق
                 const catCard = `
-                    <div onclick="showCategoryItems('${cat.id}')" class="bg-white rounded-2xl p-6 border-2 border-zinc-100 flex flex-col items-center justify-center gap-3 text-center hover:border-black transition-all cursor-pointer group shadow-xs">
+                    <div onclick="window.showCategoryItems('${cat.id}')" class="bg-white rounded-2xl p-6 border-2 border-zinc-100 flex flex-col items-center justify-center gap-3 text-center hover:border-black transition-all cursor-pointer group shadow-xs">
                         <i class="fas ${iconClass} text-black text-4xl group-hover:scale-105 transition-transform"></i>
                         <h3 class="font-bold text-black text-xs md:text-sm uppercase tracking-tight">${catName}</h3>
                     </div>
@@ -277,12 +271,15 @@
                 categoriesGrid.classList.add('hidden');
                 itemsList.classList.remove('hidden');
                 backBtn.classList.remove('hidden');
-                const selectedCat = globalCategories.find(c => c.id === activeCategory);
+                const selectedCat = globalCategories.find(c => c.id.toLowerCase().trim() === activeCategory.toLowerCase().trim());
                 titleText.innerText = selectedCat ? (currentLang === 'ar' ? (selectedCat.name_ar || selectedCat.name) : (selectedCat.name_en || selectedCat.name)) : "";
             }
 
             let filtered = globalItems.filter(p => {
-                const matchCategory = activeCategory ? p.categoryId === activeCategory : true;
+                const pCatId = (p.categoryId || "").toLowerCase().trim();
+                const actCatId = activeCategory ? activeCategory.toLowerCase().trim() : "";
+
+                const matchCategory = activeCategory ? pCatId === actCatId : true;
                 const nameArLower = (p.name_ar || "").toLowerCase();
                 const nameEnLower = (p.name_en || "").toLowerCase();
                 const matchSearch = query ? (nameArLower.includes(query) || nameEnLower.includes(query)) : true;
@@ -371,8 +368,6 @@
             searchInput.placeholder = localize[currentLang].searchPlaceholder;
             document.querySelector('.filter-sugar-text').innerText = currentLang === 'en' ? 'Sugar-Free' : 'بدون سكر 🚫';
             if (currentLang === 'ar') { backIcon.className = "fas fa-chevron-right text-xs"; } else { backIcon.className = "fas fa-chevron-left text-xs"; }
-
-            // تحديث نصوص الفايربيز المباشرة عند قلب اللغة
             if (globalCategories.length > 0) checkAndRender();
         });
 
@@ -407,10 +402,8 @@
         function resetSliderInterval() {
             if (sliderInterval) clearInterval(sliderInterval);
             if (globalBanners.length <= 1) return;
-
             currentSlide = 0;
             const sliderWrapper = document.getElementById('sliderWrapper');
-
             sliderInterval = setInterval(() => {
                 if (!promoSlider.classList.contains('hidden')) {
                     const dots = document.querySelectorAll('.dot');
@@ -423,6 +416,9 @@
                 }
             }, 3500);
         }
+
+        // 🌟 الربط الحتمي بالـ window عشان المتصفح يقرا الضغط فوراً في الـ type="module"
+        window.showCategoryItems = showCategoryItems;
     </script>
 </body>
 
