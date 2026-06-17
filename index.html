@@ -1,187 +1,429 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="htmlTag">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ace Cafe</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACE Cafe Menu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.12);
-            --glass-border: rgba(255, 255, 255, 0.22);
-            --text: rgba(255, 255, 255, 0.94);
-            --muted: rgba(255, 255, 255, 0.78);
-            --shadow: 0 18px 60px rgba(0, 0, 0, .35);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Cairo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            color: var(--text);
-            display: grid;
-            place-items: center;
-            padding: 18px;
-            overflow: hidden;
-
-            background:
-                radial-gradient(900px 600px at 15% 10%, rgba(0, 180, 255, 0.32), transparent 60%),
-                radial-gradient(700px 520px at 85% 25%, rgba(180, 90, 255, 0.26), transparent 55%),
-                radial-gradient(650px 520px at 50% 95%, rgba(0, 255, 170, 0.16), transparent 60%),
-                linear-gradient(135deg, #0b1020, #0a0f1b 55%, #070b14);
-        }
-
-        /* خلفية فقاعات ناعمة */
-        .blob {
-            position: absolute;
-            filter: blur(35px);
-            opacity: .55;
-            border-radius: 999px;
-            z-index: 0;
-        }
-
-        .b1 {
-            width: 300px;
-            height: 300px;
-            left: -110px;
-            top: -120px;
-            background: rgba(0, 180, 255, .55);
-        }
-
-        .b2 {
-            width: 330px;
-            height: 330px;
-            right: -140px;
-            top: 60px;
-            background: rgba(180, 90, 255, .5);
-        }
-
-        .b3 {
-            width: 280px;
-            height: 280px;
-            left: 22%;
-            bottom: -140px;
-            background: rgba(0, 255, 170, .35);
-        }
-
-        /* كارت موبايل */
-        .card {
-            position: relative;
-            z-index: 1;
-            width: min(420px, 100%);
-            padding: 28px 18px;
-            border-radius: 22px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            text-align: center;
-        }
-
-        .spade {
-            font-size: 96px;
-            line-height: 1;
-            margin: 6px 0 10px;
-            text-shadow: 0 16px 50px rgba(0, 0, 0, .35);
-            user-select: none;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 24px;
-            letter-spacing: .2px;
-        }
-
-        p {
-            margin: 8px 0 0;
-            color: var(--muted);
-            line-height: 1.9;
-            font-size: 15px;
-        }
-
-        .btn {
-            margin-top: 18px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            padding: 14px 16px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: rgba(255, 255, 255, .95);
-            background: rgba(255, 255, 255, .12);
-            border: 1px solid rgba(255, 255, 255, .22);
-            box-shadow: 0 10px 26px rgba(0, 0, 0, .22);
-            transition: transform .15s ease, background .15s ease;
-            -webkit-tap-highlight-color: transparent;
-            font-weight: 700;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            background: rgba(255, 255, 255, .16);
-        }
-
-        .btn:active {
-            transform: translateY(0px);
-        }
-
-        .btn svg {
-            opacity: .95;
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            .card {
-                animation: float 6.5s ease-in-out infinite;
-            }
-
-            @keyframes float {
-
-                0%,
-                100% {
-                    transform: translateY(0);
-                }
-
-                50% {
-                    transform: translateY(-6px);
-                }
-            }
+            font-family: 'Inter', 'Cairo', sans-serif;
         }
     </style>
 </head>
 
-<body>
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
+<body class="bg-gray-50 text-black antialiased min-h-screen pb-24">
 
-    <main class="card" role="main" aria-label="Ace Cafe">
-        <div class="spade" aria-hidden="true">♠</div>
+    <!-- الهيدر الديناميكي المطور -->
+    <header
+        class="relative h-56 bg-zinc-950 text-white flex flex-col justify-end p-6 rounded-b-[2.5rem] shadow-md overflow-hidden text-center">
+        <div class="absolute inset-0 bg-black/60 z-10"></div>
+        <!-- 🌟 وضعنا ID هنا ليتغير الرابط تلقائياً من الفايربيز -->
+        <img id="headerBgImg" src="https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=600"
+            class="absolute inset-0 w-full h-full object-cover" alt="Cafe Background">
 
-        <h1>أهلاً بك في Ace Cafe</h1>
-        <p>اضغط الزر بالأسفل للذهاب إلى المنيو.</p>
+        <div class="relative z-20 flex flex-col items-center">
+            <button id="langBtn"
+                class="absolute -top-12 right-0 bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/20 transition-all cursor-pointer backdrop-blur-xs">
+                العربية
+            </button>
+            <span id="statusBadge"
+                class="bg-emerald-500/80 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2 shadow-xs">Open
+                Now</span>
+            <h1 id="mainTitle" class="text-3xl font-bold tracking-tight drop-shadow-md">☕ ACE Cafe</h1>
+            <p id="mainDesc" class="text-zinc-300 text-sm mt-1 font-medium drop-shadow-xs">Specialty Coffee & Premium
+                Drinks</p>
+        </div>
+    </header>
 
-        <a class="btn" href="https://qr-menu-ace.web.app/menu/ace">
-            <!-- أيقونة بسيطة -->
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7Z" stroke="white"
-                    stroke-width="1.6" opacity=".95" />
-                <path d="M8 9h8M8 12h8M8 15h5" stroke="white" stroke-width="1.6" stroke-linecap="round" opacity=".95" />
-            </svg>
-            اذهب للمنيو
-        </a>
+    <main class="max-w-md mx-auto px-4 mt-6">
+
+        <!-- بنر العروض التلقائي المطور -->
+        <div id="promoSlider" class="relative w-full h-40 bg-black rounded-2xl overflow-hidden shadow-sm mb-6 hidden">
+            <div id="sliderWrapper" class="flex w-full h-full transition-transform duration-500 ease-in-out"></div>
+            <div id="sliderDots" class="absolute bottom-2 right-4 z-20 flex gap-1.5"></div>
+        </div>
+
+        <div id="searchSection" class="mb-6 flex flex-col gap-3">
+            <div class="relative">
+                <i class="fas fa-search absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="Search for coffee..."
+                    class="w-full bg-white border-2 border-zinc-100 rounded-xl py-3 pl-10 pr-4 text-sm focus:outline-hidden focus:border-black transition-all shadow-xs">
+            </div>
+            <div class="flex gap-2 text-xs font-semibold">
+                <button id="filterSugar"
+                    class="bg-white border-2 border-zinc-100 text-gray-600 px-4 py-2 rounded-lg flex items-center gap-1.5 cursor-pointer transition-all">
+                    🚫 <span class="filter-sugar-text">Sugar-Free</span>
+                </button>
+            </div>
+        </div>
+
+        <button id="backBtn"
+            class="hidden mb-4 bg-zinc-900 hover:bg-black text-white px-4 py-2.5 rounded-xl font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-xs">
+            <i id="backIcon" class="fas fa-chevron-left text-xs"></i> <span id="backText">Back to Main Categories</span>
+        </button>
+
+        <h2 id="pageTitle" class="text-xl font-bold text-black mb-4 flex items-center gap-2">
+            <span class="w-1.5 h-6 bg-black rounded-full"></span>
+            <span id="titleText">Main Categories</span>
+        </h2>
+
+        <div id="categoriesGrid" class="grid grid-cols-2 gap-4"></div>
+        <div id="itemsList" class="hidden flex flex-col gap-3"></div>
+
     </main>
+
+    <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 py-3 z-50 shadow-lg">
+        <div class="max-w-md mx-auto flex justify-around items-center text-zinc-600">
+            <a href="https://tiktok.com" target="_blank"
+                class="flex flex-col items-center gap-0.5 hover:text-black transition-colors">
+                <i class="fab fa-tiktok text-xl"></i> <span class="text-[10px] font-medium">TikTok</span>
+            </a>
+            <a href="https://instagram.com" target="_blank"
+                class="flex flex-col items-center gap-0.5 hover:text-black transition-colors">
+                <i class="fab fa-instagram text-xl"></i> <span class="text-[10px] font-medium">Instagram</span>
+            </a>
+            <a href="https://facebook.com" target="_blank"
+                class="flex flex-col items-center gap-0.5 hover:text-black transition-colors">
+                <i class="fab fa-facebook text-xl"></i> <span class="text-[10px] font-medium">Facebook</span>
+            </a>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDnMvSH_dNzIcf-AZ4GPOaRWgIAuiwKTeU",
+            authDomain: "qr-menu-ace.firebaseapp.com",
+            projectId: "qr-menu-ace",
+            storageBucket: "qr-menu-ace.firebasestorage.app",
+            messagingSenderId: "1020352812127",
+            appId: "1:1020352812127:web:a318f7f0dea198510637ea",
+            measurementId: "G-F9L0S034W4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const categoriesCollection = collection(db, "cafes", "ace", "categories");
+        const itemsCollection = collection(db, "cafes", "ace", "items");
+        const bannersCollection = collection(db, "cafes", "ace", "banners");
+        const cafeDocRef = doc(db, "cafes", "ace"); // المستند الرئيسي للكافيه
+
+        let globalCategories = [];
+        let globalItems = [];
+        let globalBanners = [];
+        let currentLang = 'en';
+        let activeCategory = null;
+        let activeFilters = { isSugarFree: false };
+
+        const autoCategoryIcons = {
+            "add-ons": "fa-plus-circle", "dessert": "fa-cookie-bite", "frappe": "fa-blender",
+            "fresh juices": "fa-glass-citrus", "herbal drinks": "fa-leaf", "hot drinks": "fa-mug-saucer",
+            "hot espresso": "fa-coffee", "hot winter drinks": "fa-fire-burner", "iced coffee": "fa-glass-water",
+            "matcha": "fa-seedling", "matcha blended": "fa-whiskey-glass", "milkshake": "fa-glass-long",
+            "mojito": "fa-glass-water-droplet", "non coffee frappe": "fa-ice-cream", "pancakes": "fa-layer-group",
+            "smoothies": "fa-wine-glass", "soft drinks": "fa-bottle-water", "soft ice cream": "fa-ice-cream",
+            "specialty coffee": "fa-mug-hot", "turkish coffee": "fa-mug-hot", "waffles": "fa-border-all"
+        };
+
+        const localize = {
+            ar: {
+                status: "مفتوح الآن", back: "العودة للأقسام الرئيسية", mainTitle: "الأقسام الرئيسية", searchPlaceholder: "ابحث عن قهوة، حلويات...",
+                sugarFree: "بدون سكر 🚫", noResults: "لا توجد نتائج مطابقة لبحثك.",
+                bestSeller: "🔥 الأكثر مبيعاً", newBadge: "✨ جديد"
+            },
+            en: {
+                status: "Open Now", back: "Back to Main Categories", mainTitle: "Main Categories", searchPlaceholder: "Search for coffee, sweets...",
+                sugarFree: "Sugar-Free", noResults: "No items match your search.",
+                bestSeller: "🔥 Best Seller", newBadge: "✨ New"
+            }
+        };
+
+        // 🌟 مراقبة المستند الرئيسي لجلب صورة الهيدر واسم الكافيه ديناميكياً
+        onSnapshot(cafeDocRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.data();
+                if (data.logoUrl) {
+                    document.getElementById('headerBgImg').src = data.logoUrl;
+                }
+                const cafeName = currentLang === 'ar' ? (data.name_ar || data.name || "كافيه آيس") : (data.name_en || data.name || "ACE Cafe");
+                document.getElementById('mainTitle').innerText = cafeName;
+            }
+        });
+
+        onSnapshot(bannersCollection, (snapshot) => {
+            globalBanners = [];
+            snapshot.forEach(doc => globalBanners.push({ id: doc.id, ...doc.data() }));
+            globalBanners.sort((a, b) => (b.order || 0) - (a.order || 0));
+            renderBanners();
+        });
+
+        onSnapshot(categoriesCollection, (catSnapshot) => {
+            globalCategories = [];
+            catSnapshot.forEach(doc => {
+                globalCategories.push({ id: doc.id, ...doc.data() });
+            });
+            globalCategories.sort((a, b) => (b.order || 0) - (a.order || 0));
+            checkAndRender();
+        });
+
+        onSnapshot(itemsCollection, (itemSnapshot) => {
+            globalItems = [];
+            itemSnapshot.forEach(doc => {
+                globalItems.push({ id: doc.id, ...doc.data() });
+            });
+            globalItems.sort((a, b) => (a.order || 0) - (b.order || 0));
+            checkAndRender();
+        });
+
+        function renderBanners() {
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            const sliderDots = document.getElementById('sliderDots');
+            const promoSlider = document.getElementById('promoSlider');
+
+            if (globalBanners.length === 0) {
+                promoSlider.classList.add('hidden');
+                return;
+            }
+
+            if (!searchInput.value && activeCategory === null) {
+                promoSlider.classList.remove('hidden');
+            }
+
+            sliderWrapper.innerHTML = '';
+            sliderDots.innerHTML = '';
+
+            globalBanners.forEach((banner, index) => {
+                const title = currentLang === 'ar' ? (banner.titleAr || '') : (banner.titleEn || '');
+                const slideHTML = `
+                    <div class="w-full h-full shrink-0 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+                        <img src="${banner.url}" class="w-full h-full object-cover" alt="Promo">
+                        ${title ? `
+                        <div class="absolute bottom-4 left-4 right-4 z-20 text-white">
+                            <h3 class="text-base font-bold">${title}</h3>
+                        </div>` : ''}
+                    </div>
+                `;
+                sliderWrapper.innerHTML += slideHTML;
+
+                const dotHTML = `<span class="dot w-2 h-2 rounded-full bg-white transition-all" style="opacity: ${index === 0 ? '1' : '0.5'}; width: ${index === 0 ? '16px' : '8px'}"></span>`;
+                sliderDots.innerHTML += dotHTML;
+            });
+
+            resetSliderInterval();
+        }
+
+        function checkAndRender() {
+            if (itemsList.classList.contains('hidden') && !searchInput.value) { initMenu(); }
+            else { renderItems(); }
+        }
+
+        function initMenu() {
+            itemsList.classList.add('hidden');
+            backBtn.classList.add('hidden');
+            categoriesGrid.classList.remove('hidden');
+            if (!searchInput.value && globalBanners.length > 0) promoSlider.classList.remove('hidden');
+            titleText.innerText = localize[currentLang].mainTitle;
+
+            categoriesGrid.innerHTML = '';
+            if (globalCategories.length === 0) {
+                categoriesGrid.innerHTML = `<p class="col-span-2 text-center text-gray-400 text-sm py-8">Loading categories...</p>`;
+                return;
+            }
+
+            globalCategories.forEach(cat => {
+                const catName = currentLang === 'ar' ? (cat.name_ar || cat.name || cat.id) : (cat.name_en || cat.name || cat.id);
+                const lookupId = cat.id.toLowerCase().trim();
+                const iconClass = autoCategoryIcons[lookupId] || "fa-mug-hot";
+
+                const catCard = `
+                    <div onclick="showCategoryItems('${cat.id}')" class="bg-white rounded-2xl p-6 border-2 border-zinc-100 flex flex-col items-center justify-center gap-3 text-center hover:border-black transition-all cursor-pointer group shadow-xs">
+                        <i class="fas ${iconClass} text-black text-4xl group-hover:scale-105 transition-transform"></i>
+                        <h3 class="font-bold text-black text-xs md:text-sm uppercase tracking-tight">${catName}</h3>
+                    </div>
+                `;
+                categoriesGrid.innerHTML += catCard;
+            });
+        }
+
+        function showCategoryItems(categoryId) {
+            activeCategory = categoryId;
+            searchInput.value = '';
+            renderItems();
+        }
+
+        function renderItems() {
+            const query = searchInput.value.toLowerCase().trim();
+
+            if (query || activeCategory === null) {
+                promoSlider.classList.add('hidden');
+                categoriesGrid.classList.add('hidden');
+                itemsList.classList.remove('hidden');
+                backBtn.classList.toggle('hidden', !query && activeCategory === null);
+                titleText.innerText = query ? (currentLang === 'en' ? "Search Results" : "نتائج البحث") : localize[currentLang].mainTitle;
+            } else {
+                promoSlider.classList.add('hidden');
+                categoriesGrid.classList.add('hidden');
+                itemsList.classList.remove('hidden');
+                backBtn.classList.remove('hidden');
+                const selectedCat = globalCategories.find(c => c.id === activeCategory);
+                titleText.innerText = selectedCat ? (currentLang === 'ar' ? (selectedCat.name_ar || selectedCat.name) : (selectedCat.name_en || selectedCat.name)) : "";
+            }
+
+            let filtered = globalItems.filter(p => {
+                const matchCategory = activeCategory ? p.categoryId === activeCategory : true;
+                const nameArLower = (p.name_ar || "").toLowerCase();
+                const nameEnLower = (p.name_en || "").toLowerCase();
+                const matchSearch = query ? (nameArLower.includes(query) || nameEnLower.includes(query)) : true;
+                const matchSugar = activeFilters.isSugarFree ? p.isSugarFree === true : true;
+                return matchCategory && matchSearch && matchSugar;
+            });
+
+            itemsList.innerHTML = '';
+            if (filtered.length === 0) {
+                itemsList.innerHTML = `<p class="text-center text-gray-500 py-8 text-sm">${localize[currentLang].noResults}</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                const itemName = currentLang === 'ar' ? (item.name_ar || item.name_en) : (item.name_en || item.name_ar);
+                const itemDesc = currentLang === 'ar' ? (item.note_ar || "") : (item.note_en || "");
+
+                const lookupItemId = (item.categoryId || "").toLowerCase().trim();
+                const itemIconClass = autoCategoryIcons[lookupItemId] || "fa-coffee";
+
+                let priceHTML = '';
+                if (item.prices && typeof item.prices === 'object') {
+                    const pSmall = item.prices.s || item.prices.S;
+                    const pMedium = item.prices.m || item.prices.M;
+                    const pLarge = item.prices.l || item.prices.L;
+                    const pSingle = item.prices.price || item.prices.normal || Object.values(item.prices)[0] || 0;
+
+                    if (pSmall || pMedium || pLarge) {
+                        priceHTML = `<div class="flex flex-col gap-0.5 items-end text-[11px] font-bold text-zinc-500 bg-zinc-100 p-2 rounded-xl min-w-[75px] shrink-0">`;
+                        if (pSmall) priceHTML += `<div>${currentLang === 'en' ? 'S:' : 'ص:'} <span class="text-black font-extrabold">${pSmall}</span></div>`;
+                        if (pMedium) priceHTML += `<div>${currentLang === 'en' ? 'M:' : 'و:'} <span class="text-black font-extrabold">${pMedium}</span></div>`;
+                        if (pLarge) priceHTML += `<div>${currentLang === 'en' ? 'L:' : 'ك:'} <span class="text-black font-extrabold">${pLarge}</span></div>`;
+                        priceHTML += `</div>`;
+                    } else {
+                        priceHTML = `<span class="text-black font-extrabold text-sm bg-zinc-100 px-2.5 py-1 rounded-lg shrink-0">${pSingle} EGP</span>`;
+                    }
+                } else {
+                    priceHTML = `<span class="text-black font-extrabold text-sm bg-zinc-100 px-2.5 py-1 rounded-lg shrink-0">${item.price || 0} EGP</span>`;
+                }
+
+                let badgeHTML = '';
+                if (item.badge === 'best') badgeHTML = `<span class="bg-black text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md ml-1 mr-1">${localize[currentLang].bestSeller}</span>`;
+                if (item.badge === 'new') badgeHTML = `<span class="bg-zinc-100 text-black border border-zinc-300 text-[9px] font-bold px-1.5 py-0.5 rounded-md ml-1 mr-1">${localize[currentLang].newBadge}</span>`;
+
+                const itemCard = `
+                    <div class="bg-white rounded-2xl p-4 flex gap-4 border-2 border-zinc-100 hover:border-black transition-all items-center shadow-xs">
+                        <div class="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center shrink-0">
+                            <i class="fas ${itemIconClass} text-black text-xl opacity-80"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="font-bold text-black text-sm md:text-base flex items-center flex-wrap gap-1">${itemName} ${badgeHTML}</h4>
+                                    ${itemDesc ? `<p class="text-xs text-gray-500 mt-0.5 line-clamp-1">${itemDesc}</p>` : ''}
+                                </div>
+                                ${priceHTML}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                itemsList.innerHTML += itemCard;
+            });
+        }
+
+        const htmlTag = document.getElementById('htmlTag');
+        const langBtn = document.getElementById('langBtn');
+        const statusBadge = document.getElementById('statusBadge');
+        const mainDesc = document.getElementById('mainDesc');
+        const backBtn = document.getElementById('backBtn');
+        const backText = document.getElementById('backText');
+        const backIcon = document.getElementById('backIcon');
+        const titleText = document.getElementById('titleText');
+        const categoriesGrid = document.getElementById('categoriesGrid');
+        const itemsList = document.getElementById('itemsList');
+        const searchInput = document.getElementById('searchInput');
+        const promoSlider = document.getElementById('promoSlider');
+
+        langBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            htmlTag.setAttribute('lang', currentLang);
+            htmlTag.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            langBtn.innerText = currentLang === 'en' ? 'العربية' : 'EN';
+            statusBadge.innerText = localize[currentLang].status;
+            mainDesc.innerText = localize[currentLang].desc;
+            backText.innerText = localize[currentLang].back;
+            searchInput.placeholder = localize[currentLang].searchPlaceholder;
+            document.querySelector('.filter-sugar-text').innerText = currentLang === 'en' ? 'Sugar-Free' : 'بدون سكر 🚫';
+            if (currentLang === 'ar') { backIcon.className = "fas fa-chevron-right text-xs"; } else { backIcon.className = "fas fa-chevron-left text-xs"; }
+
+            // تحديث نصوص الفايربيز المباشرة عند قلب اللغة
+            if (globalCategories.length > 0) checkAndRender();
+        });
+
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value.trim() !== '') activeCategory = null;
+            renderItems();
+        });
+
+        document.getElementById('filterSugar').addEventListener('click', () => {
+            activeFilters.isSugarFree = !activeFilters.isSugarFree;
+            const btn = document.getElementById('filterSugar');
+            if (activeFilters.isSugarFree) {
+                btn.classList.replace('bg-white', 'bg-black'); btn.classList.replace('text-gray-600', 'text-white'); btn.classList.add('border-black');
+                if (itemsList.classList.contains('hidden')) { activeCategory = null; }
+            } else {
+                btn.classList.replace('bg-black', 'bg-white'); btn.classList.replace('text-white', 'text-gray-600'); btn.classList.remove('border-black');
+                if (!searchInput.value.trim()) { activeCategory = null; initMenu(); return; }
+            }
+            renderItems();
+        });
+
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            activeCategory = null;
+            searchInput.value = '';
+            initMenu();
+        });
+
+        let sliderInterval = null;
+        let currentSlide = 0;
+
+        function resetSliderInterval() {
+            if (sliderInterval) clearInterval(sliderInterval);
+            if (globalBanners.length <= 1) return;
+
+            currentSlide = 0;
+            const sliderWrapper = document.getElementById('sliderWrapper');
+
+            sliderInterval = setInterval(() => {
+                if (!promoSlider.classList.contains('hidden')) {
+                    const dots = document.querySelectorAll('.dot');
+                    currentSlide = (currentSlide + 1) % globalBanners.length;
+                    sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    dots.forEach((dot, index) => {
+                        dot.style.opacity = index === currentSlide ? '1' : '0.5';
+                        dot.style.width = index === currentSlide ? '16px' : '8px';
+                    });
+                }
+            }, 3500);
+        }
+    </script>
 </body>
 
 </html>
